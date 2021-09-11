@@ -1,6 +1,11 @@
-#include <iostream>
+#include <SDL2/SDL.h>
 
 int main(){
-	std::cout << "Hello, World!" << std::endl;
-	return 0;
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "[DEBUG] %s", SDL_GetError());
+		return  EXIT_FAILURE ;
+	}
+	
+	SDL_Quit();
+	return EXIT_SUCCESS;
 }
