@@ -33,6 +33,16 @@ SnakeCell::SnakeCell(int x, int y, Direction direction, SnakeCell *prev, SnakeCe
 	assert(x >= 0 && y >= 0 && x + length <= WIDTH && y + length <= HEIGHT && "Coordinated outside the window");
 }
 
+void SnakeCell::turn(Direction direction){
+	if(direction != m_direction){
+		if(direction == Up && m_direction == Down) return;
+		if(direction == Down && m_direction == Up) return;
+		if(direction == Left && m_direction == Right) return;
+		if(direction == Right && m_direction == Left) return;
+		m_direction = direction;
+	}
+}
+
 void Snake::render(SDL_Renderer *renderer){
 	m_head.render(renderer);
 	m_head.move();
@@ -40,4 +50,8 @@ void Snake::render(SDL_Renderer *renderer){
 
 Snake::Snake(int x, int y, Direction direction)
 	: m_head({ x, y, direction }){
+}
+
+void Snake::turn(Direction direction){
+	m_head.turn(direction);
 }

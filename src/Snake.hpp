@@ -16,6 +16,7 @@ public:
 	
 	void render(SDL_Renderer *renderer);
 	void move();
+	void turn(Direction direction);
 	
 	static const int length = 10;
 
@@ -34,6 +35,7 @@ public:
 	Snake(int x, int y, Direction direction = Right);
 	
 	void render(SDL_Renderer *renderer);
+	void turn(Direction direction);
 	
 private:
 	SnakeCell m_head;

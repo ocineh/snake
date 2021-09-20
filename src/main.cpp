@@ -1,3 +1,4 @@
+#include <atomic>
 #include "Snake.hpp"
 
 int main(){
@@ -22,6 +23,17 @@ int main(){
 		while(SDL_PollEvent(&events)){
 			switch(events.type){
 				case SDL_QUIT: isOpen = false; break;
+				case SDL_KEYDOWN:
+					SDL_Log("+key");
+					switch(events.key.keysym.scancode){
+						case SDL_SCANCODE_W: snake.turn(Up); break;
+						case SDL_SCANCODE_A: snake.turn(Left); break;
+						case SDL_SCANCODE_S: snake.turn(Down); break;
+						case SDL_SCANCODE_D: snake.turn(Right); break;
+						default: break;
+					}
+					break;
+				case SDL_KEYUP: SDL_Log("-key"); break;
 			}
 		}
 		
