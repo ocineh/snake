@@ -11,6 +11,6 @@ ELSE()
 include_directories(/usr/local/include)
 ENDIF()
 
-add_executable(snake src/main.cpp src/Snake.cpp src/Snake.hpp)
+add_executable(snake src/main.cpp src/Snake.cpp src/Snake.hpp src/game.cpp src/game.hpp)
 target_link_libraries(snake ${SDL2_LIBRARIES})
 add_definitions(-DSDL_MAIN_HANDLED)
