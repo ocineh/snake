@@ -17,8 +17,6 @@ public:
 	void render(SDL_Renderer *renderer);
 	void move();
 	void turn(Direction direction);
-	
-	static const int length = 10;
 
 private:
 	void move(Direction direction) noexcept;

@@ -10,6 +10,8 @@ public:
 	void start();
 	
 	void stop();
+	
+	static const int length = 10;
 
 private:
 	void handle_input();
