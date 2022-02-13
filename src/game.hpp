@@ -3,6 +3,9 @@
 
 #include "Snake.hpp"
 
+#define WIDTH 800
+#define HEIGHT 800
+
 class Game {
 public:
 	Game();

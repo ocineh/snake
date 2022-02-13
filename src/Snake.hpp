@@ -3,9 +3,6 @@
 
 #include <SDL2/SDL.h>
 
-const int WIDTH = 800;
-const int HEIGHT = 800;
-
 enum Direction{ Up, Down, Left, Right };
 
 class SnakeCell{
