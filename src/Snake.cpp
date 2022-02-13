@@ -44,6 +44,10 @@ void SnakeCell::turn(Direction direction){
 	}
 }
 
+std::pair<int, int> SnakeCell::get_position() {
+	return {m_rect.x, m_rect.y };
+}
+
 void Snake::render(SDL_Renderer *renderer){
 	m_head.render(renderer);
 	m_head.move();
@@ -55,4 +59,8 @@ Snake::Snake(int x, int y, Direction direction)
 
 void Snake::turn(Direction direction){
 	m_head.turn(direction);
+}
+
+std::pair<int, int> Snake::get_head_position() {
+	return m_head.get_position();
 }

@@ -2,6 +2,7 @@
 #define SNAKE_SNAKE_HPP
 
 #include <SDL2/SDL.h>
+#include <utility>
 
 enum Direction{ Up, Down, Left, Right };
 
@@ -14,6 +15,8 @@ public:
 	void render(SDL_Renderer *renderer);
 	void move();
 	void turn(Direction direction);
+	
+	std::pair<int, int> get_position();
 
 private:
 	void move(Direction direction) noexcept;
@@ -32,6 +35,7 @@ public:
 	void render(SDL_Renderer *renderer);
 	void turn(Direction direction);
 	
+	std::pair<int, int> get_head_position();
 private:
 	SnakeCell m_head;
 };
