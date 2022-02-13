@@ -1,4 +1,5 @@
 #include <cassert>
+#include <unistd.h>
 #include "Snake.hpp"
 #include "game.hpp"
 
@@ -12,21 +13,9 @@ void SnakeCell::move(Direction direction) noexcept{
 }
 
 void SnakeCell::render(SDL_Renderer *renderer){
-	if(m_next != nullptr) m_next->render(renderer);
+	if(m_prev != nullptr) m_prev->render(renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 	SDL_RenderFillRect(renderer, &m_rect);
-}
-
-void SnakeCell::move(){
-	if(m_next != nullptr) m_next->move();
-	if(m_prev != nullptr) m_rect = m_prev->m_rect;
-	else{
-		if(m_direction == Up && m_rect.y <= 0) m_direction = Right;
-		else if(m_direction == Left && m_rect.x <= 0) m_direction = Up;
-		else if(m_direction == Right && m_rect.x + Game::length >= WIDTH) m_direction = Down;
-		else if(m_direction == Down && m_rect.y + Game::length >= HEIGHT) m_direction = Left;
-		this->move(m_direction);
-	}
 }
 
 SnakeCell::SnakeCell(int x, int y, Direction direction, SnakeCell *prev, SnakeCell *next)
@@ -48,9 +37,15 @@ std::pair<int, int> SnakeCell::get_position() {
 	return {m_rect.x, m_rect.y };
 }
 
-void Snake::render(SDL_Renderer *renderer){
+void Snake::render(SDL_Renderer *renderer) {
 	m_head.render(renderer);
-	m_head.move();
+	move();
+}
+
+void Snake::move() {
+	for(auto *actual = get_tail(); actual->m_next != nullptr; actual = actual->m_next)
+		actual->m_rect = { actual->m_next->m_rect };
+	m_head.move(m_head.m_direction);
 }
 
 Snake::Snake(int x, int y, Direction direction)
@@ -63,4 +58,17 @@ void Snake::turn(Direction direction){
 
 std::pair<int, int> Snake::get_head_position() {
 	return m_head.get_position();
+}
+
+void Snake::grow() {
+	auto *tail = get_tail();
+	tail->m_prev = new SnakeCell { tail->m_rect.x, tail->m_rect.y + Game::length };
+	tail->m_prev->m_next = tail;
+}
+
+SnakeCell *Snake::get_tail() {
+	auto *actual = &m_head;
+	while(actual->m_prev != nullptr)
+		actual = actual->m_prev;
+	return actual;
 }

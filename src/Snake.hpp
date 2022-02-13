@@ -4,9 +4,11 @@
 #include <SDL2/SDL.h>
 #include <utility>
 
-enum Direction{ Up, Down, Left, Right };
+enum Direction { Up, Down, Left, Right };
 
-class SnakeCell{
+class Snake;
+
+class SnakeCell {
 public:
 	SnakeCell() = delete;
 	SnakeCell(const SnakeCell &snake_cell) = default;
@@ -17,6 +19,8 @@ public:
 	void turn(Direction direction);
 	
 	std::pair<int, int> get_position();
+	
+	friend Snake;
 
 private:
 	void move(Direction direction) noexcept;
@@ -26,17 +30,21 @@ private:
 	SnakeCell *m_prev, *m_next;
 };
 
-class Snake{
+class Snake {
 public:
 	Snake() = delete;
 	Snake(Snake const &snake) = default;
 	Snake(int x, int y, Direction direction = Right);
 	
 	void render(SDL_Renderer *renderer);
+	void move();
 	void turn(Direction direction);
+	void grow();
 	
 	std::pair<int, int> get_head_position();
 private:
+	SnakeCell *get_tail();
+	
 	SnakeCell m_head;
 };
 
