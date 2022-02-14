@@ -1,7 +1,7 @@
 #ifndef SNAKE_GAME_HPP
 #define SNAKE_GAME_HPP
 
-#include "Snake.hpp"
+#include "snake.hpp"
 
 #define WIDTH 800
 #define HEIGHT 800

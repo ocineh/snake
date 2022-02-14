@@ -1,5 +1,5 @@
 #include <atomic>
-#include "Snake.hpp"
+#include "snake.hpp"
 #include "game.hpp"
 
 int main() {

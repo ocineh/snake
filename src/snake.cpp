@@ -1,4 +1,4 @@
-#include "Snake.hpp"
+#include "snake.hpp"
 #include "game.hpp"
 
 void Snake::render(SDL_Renderer *renderer) {
