@@ -54,3 +54,9 @@ void Game::stop() {
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 }
+
+bool are_they_colliding(SDL_Rect *rect_1, SDL_Rect *rect_2) {
+	SDL_Rect intersection {};
+	SDL_IntersectRect(rect_1, rect_2, &intersection);
+	return intersection.w >= 0 && intersection.h >= 0;
+}

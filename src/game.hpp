@@ -6,6 +6,8 @@
 #define WIDTH 800
 #define HEIGHT 800
 
+bool are_they_colliding(SDL_Rect *rect_1, SDL_Rect *rect_2);
+
 class Game {
 public:
 	Game();
