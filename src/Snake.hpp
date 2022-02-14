@@ -3,32 +3,10 @@
 
 #include <SDL2/SDL.h>
 #include <utility>
+#include <vector>
+#include <deque>
 
 enum Direction { Up, Down, Left, Right };
-
-class Snake;
-
-class SnakeCell {
-public:
-	SnakeCell() = delete;
-	SnakeCell(const SnakeCell &snake_cell) = default;
-	SnakeCell(int x, int y, Direction direction = Right, SnakeCell *prev = nullptr, SnakeCell *next = nullptr);
-	
-	void render(SDL_Renderer *renderer);
-	void move();
-	void turn(Direction direction);
-	
-	std::pair<int, int> get_position();
-	
-	friend Snake;
-
-private:
-	void move(Direction direction) noexcept;
-	
-	SDL_Rect m_rect;
-	Direction m_direction;
-	SnakeCell *m_prev, *m_next;
-};
 
 class Snake {
 public:
@@ -40,12 +18,9 @@ public:
 	void move();
 	void turn(Direction direction);
 	void grow();
-	
-	std::pair<int, int> get_head_position();
 private:
-	SnakeCell *get_tail();
-	
-	SnakeCell m_head;
+	Direction m_direction;
+	std::deque<SDL_Rect> m_cells {};
 };
 
 #endif //SNAKE_SNAKE_HPP
