@@ -41,6 +41,7 @@ void Game::handle_input() {
 void Game::start() {
 	while(m_is_open) {
 		handle_input();
+		has_been_eaten();
 		render();
 		SDL_Delay(50);
 	}
@@ -64,10 +65,18 @@ void Game::place_food() {
 	m_food = new Food { m_x_generator(m_engine), m_y_generator(m_engine) };
 }
 
+void Game::has_been_eaten() {
+	if(m_food == nullptr) place_food();
+	if(are_they_colliding(&m_snake->m_cells.front(), &m_food->m_rect)) {
+		m_food = nullptr;
+		m_snake->grow();
+	}
+}
+
 bool are_they_colliding(SDL_Rect *rect_1, SDL_Rect *rect_2) {
 	SDL_Rect intersection {};
 	SDL_IntersectRect(rect_1, rect_2, &intersection);
-	return intersection.w >= 0 && intersection.h >= 0;
+	return intersection.w > 0 && intersection.h > 0;
 }
 
 Food::Food(int x, int y): m_rect({ x, y, 10, 10 }) {

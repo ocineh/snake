@@ -6,6 +6,8 @@
 #include <vector>
 #include <deque>
 
+class Game;
+
 enum Direction { Up, Down, Left, Right };
 
 class Snake {
@@ -18,6 +20,8 @@ public:
 	void move();
 	void turn(Direction direction);
 	void grow();
+	
+	friend Game;
 private:
 	Direction m_direction;
 	std::deque<SDL_Rect> m_cells {};

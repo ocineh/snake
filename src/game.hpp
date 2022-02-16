@@ -5,10 +5,12 @@
 #include <random>
 #include "snake.hpp"
 
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 500
+#define HEIGHT 500
 
 bool are_they_colliding(SDL_Rect *rect_1, SDL_Rect *rect_2);
+
+class Game;
 
 class Food {
 public:
@@ -19,6 +21,8 @@ public:
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 		SDL_RenderFillRect(renderer, &m_rect);
 	}
+	
+	friend Game;
 private:
 	SDL_Rect m_rect;
 };
@@ -36,10 +40,11 @@ public:
 private:
 	void handle_input();
 	void place_food();
+	void has_been_eaten();
 	
 	bool m_is_open { true };
 	Snake *m_snake = new Snake { 10, 10 };
-	Food *m_food;
+	Food *m_food { nullptr };
 	
 	SDL_Window *m_window { nullptr };
 	SDL_Renderer *m_renderer { nullptr };
