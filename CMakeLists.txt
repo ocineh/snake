@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11)
-project(snake VERSION 0.2)
+project(snake VERSION 0.5)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
