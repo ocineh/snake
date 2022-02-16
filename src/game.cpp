@@ -41,12 +41,17 @@ void Game::handle_input() {
 void Game::start() {
 	while(m_is_open) {
 		handle_input();
-		SDL_SetRenderDrawColor(m_renderer, 50, 50, 50, 255);
-		SDL_RenderClear(m_renderer);
-		m_snake->render(m_renderer);
-		SDL_RenderPresent(m_renderer);
+		render();
 		SDL_Delay(50);
 	}
+}
+
+void Game::render() {
+	SDL_SetRenderDrawColor(m_renderer, 50, 50, 50, 255);
+	SDL_RenderClear(m_renderer);
+	m_snake->render(m_renderer);
+	if(m_food != nullptr) m_food->render(m_renderer);
+	SDL_RenderPresent(m_renderer);
 }
 
 void Game::stop() {
@@ -55,8 +60,15 @@ void Game::stop() {
 	SDL_Quit();
 }
 
+void Game::place_food() {
+	m_food = new Food { m_x_generator(m_engine), m_y_generator(m_engine) };
+}
+
 bool are_they_colliding(SDL_Rect *rect_1, SDL_Rect *rect_2) {
 	SDL_Rect intersection {};
 	SDL_IntersectRect(rect_1, rect_2, &intersection);
 	return intersection.w >= 0 && intersection.h >= 0;
+}
+
+Food::Food(int x, int y): m_rect({ x, y, 10, 10 }) {
 }
