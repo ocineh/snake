@@ -51,8 +51,8 @@ private:
 	SDL_Event m_events {};
 	
 	std::default_random_engine m_engine { std::random_device {}() };
-	std::uniform_int_distribution<int> m_x_generator { 0, WIDTH };
-	std::uniform_int_distribution<int> m_y_generator { 0, HEIGHT };
+	std::uniform_int_distribution<int> m_x_generator { 0, (WIDTH - Game::length) / Game::length };
+	std::uniform_int_distribution<int> m_y_generator { 0, (HEIGHT - Game::length) / Game::length };
 };
 
 

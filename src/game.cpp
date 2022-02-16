@@ -62,7 +62,7 @@ void Game::stop() {
 }
 
 void Game::place_food() {
-	m_food = new Food { m_x_generator(m_engine), m_y_generator(m_engine) };
+	m_food = new Food { m_x_generator(m_engine) * Game::length, m_y_generator(m_engine) * Game::length };
 }
 
 void Game::has_been_eaten() {
