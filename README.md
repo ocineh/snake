@@ -2,10 +2,13 @@
 The snake game played on the terminal
 
 ## ROADMAP
-- [ ] display the tray
-- [ ] snake
-  - [ ] display
-  - [ ] move
-  - [ ] eat
+- [x] display the tray
+- [x] snake
+  - [x] display
+  - [x] move
+  - [x] eat
+  - [x] grow
   - [ ] die
-- [ ] make food appear
+    - [ ] when it eats itself
+    - [ ] when it goes outside the windows
+- [x] make food appear
