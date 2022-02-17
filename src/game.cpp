@@ -11,6 +11,11 @@ Game::Game() {
 		exit(EXIT_FAILURE);
 	}
 	SDL_SetWindowTitle(m_window, "snake");
+	if(TTF_Init() != 0) {
+		SDL_Log("Error: TTF_Init");
+		SDL_Quit();
+		return;
+	}
 }
 
 void Game::handle_input() {
@@ -39,10 +44,28 @@ void Game::handle_input() {
 }
 
 void Game::start() {
+	bool is_alive { true };
 	while(m_is_open) {
 		handle_input();
-		has_been_eaten();
-		render();
+		if(is_alive) {
+			has_been_eaten();
+			render();
+			if(is_outside_window()) {
+				is_alive = false;
+				TTF_Font *font = TTF_OpenFont("../fonts/font.ttf", 50);
+				SDL_Surface *surface = TTF_RenderText_Solid(font, "GAME OVER", { 255, 255, 255, 255 });
+				SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+				SDL_Rect position { (WIDTH - surface->w) >> 1, (HEIGHT - surface->h) >> 1, surface->w, surface->h };
+				
+				SDL_SetRenderDrawColor(m_renderer, 50, 50, 50, 255);
+				SDL_RenderClear(m_renderer);
+				SDL_RenderCopy(m_renderer, texture, nullptr, &position);
+				SDL_RenderPresent(m_renderer);
+				
+				TTF_CloseFont(font);
+				SDL_FreeSurface(surface);
+			}
+		}
 		SDL_Delay(50);
 	}
 }
@@ -58,6 +81,7 @@ void Game::render() {
 void Game::stop() {
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
+	TTF_Quit();
 	SDL_Quit();
 }
 
@@ -71,6 +95,11 @@ void Game::has_been_eaten() {
 		m_food = nullptr;
 		m_snake->grow();
 	}
+}
+
+bool Game::is_outside_window() {
+	auto *head = &m_snake->m_cells.front();
+	return !(head->x >= 0 && head->x <= (WIDTH - length) && head->y >= 0 && head->y <= (HEIGHT - length));
 }
 
 bool are_they_colliding(SDL_Rect *rect_1, SDL_Rect *rect_2) {

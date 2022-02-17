@@ -10,5 +10,5 @@ The snake game played on the terminal
   - [x] grow
   - [ ] die
     - [ ] when it eats itself
-    - [ ] when it goes outside the windows
+    - [x] when it goes outside the windows
 - [x] make food appear

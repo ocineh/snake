@@ -1,7 +1,8 @@
 #ifndef SNAKE_GAME_HPP
 #define SNAKE_GAME_HPP
 
-#include<cstdlib>
+#include <SDL2/SDL_ttf.h>
+#include <cstdlib>
 #include <random>
 #include "snake.hpp"
 
@@ -41,6 +42,7 @@ private:
 	void handle_input();
 	void place_food();
 	void has_been_eaten();
+	bool is_outside_window();
 	
 	bool m_is_open { true };
 	Snake *m_snake = new Snake { 10, 10 };
