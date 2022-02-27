@@ -23,22 +23,23 @@ void Game::handle_input() {
 		switch(m_events.type) {
 			case SDL_QUIT: m_is_open = false;
 				break;
-			case SDL_KEYDOWN: SDL_Log("+key");
-				if(m_events.key.keysym.scancode == SDL_SCANCODE_W || m_events.key.keysym.scancode == SDL_SCANCODE_UP)
-					m_snake->turn(Up);
-				else if(m_events.key.keysym.scancode == SDL_SCANCODE_S ||
-						m_events.key.keysym.scancode == SDL_SCANCODE_DOWN)
-					m_snake->turn(Down);
-				else if(m_events.key.keysym.scancode == SDL_SCANCODE_A ||
-						m_events.key.keysym.scancode == SDL_SCANCODE_LEFT)
-					m_snake->turn(Left);
-				else if(m_events.key.keysym.scancode == SDL_SCANCODE_D ||
-						m_events.key.keysym.scancode == SDL_SCANCODE_RIGHT)
-					m_snake->turn(Right);
+			case SDL_KEYDOWN:
+				switch(m_events.key.keysym.scancode) {
+					case SDL_SCANCODE_W:
+					case SDL_SCANCODE_UP: m_snake->turn(Up);
+						break;
+					case SDL_SCANCODE_S:
+					case SDL_SCANCODE_DOWN: m_snake->turn(Down);
+						break;
+					case SDL_SCANCODE_A:
+					case SDL_SCANCODE_LEFT: m_snake->turn(Left);
+						break;
+					case SDL_SCANCODE_D:
+					case SDL_SCANCODE_RIGHT: m_snake->turn(Right);
+						break;
+					default: break;
+				}
 				break;
-			case SDL_KEYUP: SDL_Log("-key");
-				break;
-			default: break;
 		}
 	}
 }
