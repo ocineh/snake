@@ -36,7 +36,7 @@ void Snake::turn(Direction direction) {
 }
 
 void Snake::grow() {
-	Pixel pixel { m_cells.back() };
+	Pixel pixel{ m_cells.back() };
 	pixel.move_left();
 	m_cells.push_back(pixel);
 }

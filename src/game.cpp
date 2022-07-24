@@ -93,15 +93,16 @@ void Game::stop() {
 }
 
 void Game::place_food() {
-	m_food = new Food{
+	m_food = new Pixel {
 			m_x_generator(m_engine) * Pixel::length,
-			m_y_generator(m_engine) * Pixel::length
+			m_y_generator(m_engine) * Pixel::length,
+			Game::food_color
 	};
 }
 
 void Game::has_been_eaten() {
 	if(m_food == nullptr) place_food();
-	if(m_snake->m_cells.front().is_colliding(m_food->m_pixel)) {
+	if(m_snake->m_cells.front().is_colliding(*m_food)) {
 		m_food = nullptr;
 		m_snake->grow();
 	}
@@ -110,8 +111,4 @@ void Game::has_been_eaten() {
 bool Game::is_outside_window() {
 	auto *head = &m_snake->m_cells.front();
 	return head->is_outside_window(WIDTH, HEIGHT);
-}
-
-Food::Food(int x, int y)
-		: m_pixel({ x, y, color }) {
 }
