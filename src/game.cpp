@@ -45,7 +45,7 @@ void Game::handle_input() {
 }
 
 void Game::start() {
-	bool is_alive { true };
+	bool is_alive{ true };
 	while(m_is_open) {
 		handle_input();
 		if(is_alive) {
@@ -54,15 +54,21 @@ void Game::start() {
 			if(is_outside_window()) {
 				is_alive = false;
 				TTF_Font *font = TTF_OpenFont("../fonts/font.ttf", 50);
-				SDL_Surface *surface = TTF_RenderText_Solid(font, "GAME OVER", { 255, 255, 255, 255 });
+				SDL_Surface
+						*surface = TTF_RenderText_Solid(font, "GAME OVER", { 255, 255, 255, 255 });
 				SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-				SDL_Rect position { (WIDTH - surface->w) >> 1, (HEIGHT - surface->h) >> 1, surface->w, surface->h };
-				
+				SDL_Rect position{
+						(WIDTH - surface->w) >> 1,
+						(HEIGHT - surface->h) >> 1,
+						surface->w,
+						surface->h
+				};
+
 				SDL_SetRenderDrawColor(m_renderer, 50, 50, 50, 255);
 				SDL_RenderClear(m_renderer);
 				SDL_RenderCopy(m_renderer, texture, nullptr, &position);
 				SDL_RenderPresent(m_renderer);
-				
+
 				TTF_CloseFont(font);
 				SDL_FreeSurface(surface);
 			}
@@ -87,12 +93,15 @@ void Game::stop() {
 }
 
 void Game::place_food() {
-	m_food = new Food { m_x_generator(m_engine) * Game::length, m_y_generator(m_engine) * Game::length };
+	m_food = new Food{
+			m_x_generator(m_engine) * Pixel::length,
+			m_y_generator(m_engine) * Pixel::length
+	};
 }
 
 void Game::has_been_eaten() {
 	if(m_food == nullptr) place_food();
-	if(are_they_colliding(&m_snake->m_cells.front(), &m_food->m_rect)) {
+	if(m_snake->m_cells.front().is_colliding(m_food->m_pixel)) {
 		m_food = nullptr;
 		m_snake->grow();
 	}
@@ -100,14 +109,9 @@ void Game::has_been_eaten() {
 
 bool Game::is_outside_window() {
 	auto *head = &m_snake->m_cells.front();
-	return !(head->x >= 0 && head->x <= (WIDTH - length) && head->y >= 0 && head->y <= (HEIGHT - length));
+	return head->is_outside_window(WIDTH, HEIGHT);
 }
 
-bool are_they_colliding(SDL_Rect *rect_1, SDL_Rect *rect_2) {
-	SDL_Rect intersection {};
-	SDL_IntersectRect(rect_1, rect_2, &intersection);
-	return intersection.w > 0 && intersection.h > 0;
-}
-
-Food::Food(int x, int y): m_rect({ x, y, 10, 10 }) {
+Food::Food(int x, int y)
+		: m_pixel({ x, y, color }) {
 }

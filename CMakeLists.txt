@@ -4,7 +4,7 @@ project(snake VERSION 0.5)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
-add_executable(snake src/main.cpp src/snake.cpp src/game.cpp)
+add_executable(snake src/main.cpp src/snake.cpp src/game.cpp src/pixel.cpp)
 target_include_directories(snake PUBLIC "${PROJECT_SOURCE_DIR}/include")
 add_definitions(-DSDL_MAIN_HANDLED)
 
